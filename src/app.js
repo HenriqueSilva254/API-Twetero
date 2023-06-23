@@ -33,7 +33,12 @@ app.post("/tweets", (req, res) => {
 
 app.get("/tweets", (req, res) => {
 	//.slice(-2,-10)
-    res.send(tweets);
+   
+	if(tweets.length > 10){
+		 res.send(tweets.slice(-10));
+	}else{
+		res.send(tweets);
+	}
 });
 
 
