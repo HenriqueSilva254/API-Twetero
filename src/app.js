@@ -13,26 +13,27 @@ const tweets = []
 app.post("/sign-up", (req, res) => {
 	const { username, avatar } = req.body
 	
-
-	// && typeof(username, avatar)  === String
-	// && typeof(username, avatar)  === String 
-
-	if (username === '' || typeof(username) !== 'string'|| 
-	avatar === '' || typeof(avatar) !== 'string') {
+	if(typeof(username) !== 'string' || typeof(avatar) !== 'string'){
+		res.send('Todos os campos são obrigatórios!')
+	}
+	if (username === '' || avatar === '') {
 		res.status(400).send('Todos os campos são obrigatórios!')
 	}
 	else {
 		user.username = username
 		user.avatar = avatar
-		res.send('OK')
+		res.status(201).send('OK')
 	}
 })
 
 
 app.post("/tweets", (req, res) => {
 	const { username, tweet } = req.body
-	if (username === '' || tweet === '') {
-		res.status(400).send('UNAUTHORIZED')
+	if(typeof(username) !== 'string' || typeof(tweet) !== 'string'){
+		res.send('Todos os campos são obrigatórios!')
+	}
+	if (user.username === '' ||  tweet === '' ) {
+		res.status(401).send('UNAUTHORIZED')
 	} else {
 		const newTweet = {
 			username: username,
@@ -41,18 +42,27 @@ app.post("/tweets", (req, res) => {
 		}
 		tweets.push(newTweet)
 
-		res.send('Tweet feito com sucesso');
+		res.status(201).send('Tweet feito com sucesso');
 	}
 });
 
 app.get("/tweets", (req, res) => {
-	//.slice(-2,-10)
 
 	if (tweets.length > 10) {
 		res.send(tweets.slice(-10));
 	} else {
 		res.send(tweets);
 	}
+});
+app.get("/tweets/USERNAME", (req, res) => {
+	
+	// if (tweets.length > 10) {
+	// 	res.send(tweets.slice(-10));
+	// } else {
+	// 	res.send(tweets);
+	// }
+	const tweeteUser = tweets.filter(name => name.user === user)
+
 });
 
 
