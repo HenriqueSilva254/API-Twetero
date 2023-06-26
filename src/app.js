@@ -16,9 +16,9 @@ app.post("/sign-up", (req, res) => {
 	const { username, avatar } = req.body
 	
 	if(typeof(username) !== 'string' || typeof(avatar) !== 'string'){
-		res.send('Todos os campos são obrigatórios!')
+		res.status(400).send('Todos os campos são obrigatórios!')
 	}
-	if (username === '' || avatar === '') {
+	if (!username || !avatar) {
 		res.status(400).send('Todos os campos são obrigatórios!')
 	}
 	else {
