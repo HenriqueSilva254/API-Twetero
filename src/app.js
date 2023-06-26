@@ -30,12 +30,13 @@ app.post("/sign-up", (req, res) => {
 
 
 app.post("/tweets", (req, res) => {
+	const usuario = user.username
 	const { username, tweet } = req.body
 	if(typeof(username) !== 'string' || typeof(tweet) !== 'string'){
-		res.send('Todos os campos são obrigatórios!')
+		res.status(400).send('Todos os campos são obrigatórios!')
 	}
-	if (user.username === '' ||  tweet === '' ) {
-		res.status(401).send('UNAUTHORIZED')
+	if (!username ||  !tweet || username !== usuario) {
+		res.status(400).send('UNAUTHORIZED')
 	} else {
 		const newTweet = {
 			username: username,
