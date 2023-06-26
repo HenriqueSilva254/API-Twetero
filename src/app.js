@@ -5,11 +5,13 @@ const app = express()
 app.use(cors())
 app.use(express.json());
 const PORT = 5000
+
 const user = {
 	username: "",
 	avatar: ""
 }
 const tweets = []
+
 app.post("/sign-up", (req, res) => {
 	const { username, avatar } = req.body
 	
@@ -47,23 +49,20 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-
-	if (tweets.length > 10) {
-		res.send(tweets.slice(-10));
-	} else {
-		res.send(tweets);
+	const {USERNAME} = req.query 
+	if(USERNAME === 'undefined'){
+		if (tweets.length > 10) {
+			res.send(tweets.slice(-10));
+		} else {
+			res.send(tweets);
+		}
 	}
-});
-app.get("/tweets/USERNAME", (req, res) => {
+	const tweetUser = tweets.filter(name => name.user === USERNAME)
+	res.send(tweetUser);
 	
-	// if (tweets.length > 10) {
-	// 	res.send(tweets.slice(-10));
-	// } else {
-	// 	res.send(tweets);
-	// }
-	const tweeteUser = tweets.filter(name => name.user === user)
-
+	
 });
+
 
 
 app.listen(PORT, () => console.log(`Running server on port ${PORT}`));
