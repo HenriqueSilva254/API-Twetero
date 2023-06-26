@@ -49,13 +49,10 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-	const {USERNAME} = req.query 
-	if(USERNAME === 'undefined'){
-		if (tweets.length > 10) {
-			res.send(tweets.slice(-10));
-		} else {
-			res.send(tweets);
-		}
+	if (tweets.length > 10) {
+		res.send(tweets.slice(-10));
+	} else {
+		res.send(tweets);
 	}
 	const tweetUser = tweets.filter(name => name.user === USERNAME)
 	res.send(tweetUser);
